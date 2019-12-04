@@ -65,6 +65,15 @@ function loadStructure (input) {
       background: true,
       contour: true
     })
+    o.addRepresentation('surface', {
+      name: 'cysteine_static',
+      visible: cysteine_staticCheckbox.checked,
+      sele: '[251 259 367 426]',
+      scale: 0.50,
+      colorScheme: "resname",
+      background: true,
+      contour: true
+    })
     o.addRepresentation('spacefill', {
       name: 'waterIon',
       visible: waterIonCheckbox.checked,
@@ -141,6 +150,19 @@ addElement(createElement('span', {
   innerText: 'cysteine_ajoene'
 }, { top: '108px', left: '32px' }))
 
+var cysteine_staticCheckbox = createElement('input', {
+  type: 'checkbox',
+  checked: true,
+  onchange: function (e) {
+    stage.getRepresentationsByName('cysteine_static')
+      .setVisibility(e.target.checked)
+  }
+}, { top: '132px', left: '12px' })
+addElement(cysteine_staticCheckbox)
+addElement(createElement('span', {
+  innerText: 'cysteine_static'
+}, { top: '132px', left: '32px' }))
+
 var waterIonCheckbox = createElement('input', {
   type: 'checkbox',
   checked: false,
@@ -148,11 +170,11 @@ var waterIonCheckbox = createElement('input', {
     stage.getRepresentationsByName('waterIon')
       .setVisibility(e.target.checked)
   }
-}, { top: '132px', left: '12px' })
+}, { top: '156px', left: '12px' })
 addElement(waterIonCheckbox)
 addElement(createElement('span', {
   innerText: 'water+ion'
-}, { top: '132px', left: '32px' }))
+}, { top: '156px', left: '32px' }))
 
 var centerButton = createElement('input', {
   type: 'button',
@@ -160,7 +182,7 @@ var centerButton = createElement('input', {
   onclick: function () {
     stage.autoView(1000)
   }
-}, { top: '156px', left: '12px' })
+}, { top: '180px', left: '12px' })
 addElement(centerButton)
 
 //loadStructure('data://3SN6.cif')
