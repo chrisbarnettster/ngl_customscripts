@@ -51,6 +51,21 @@ function loadStructure (input) {
       sele: 'not ( polymer or water or ion )'
     })
     o.addRepresentation('spacefill', {
+      name: 'cysteine',
+      visible: cysteineCheckbox.checked,
+      sele: 'CYS',
+      scale: 0.50
+    })
+    o.addRepresentation('surface', {
+      name: 'cysteine_ajoene',
+      visible: cysteine_ajoeneCheckbox.checked,
+      sele: '[367 687 108]',
+      scale: 0.50,
+      colorScheme: "resname",
+      background: true,
+      contour: true
+    })
+    o.addRepresentation('spacefill', {
       name: 'waterIon',
       visible: waterIonCheckbox.checked,
       sele: 'water or ion',
@@ -100,6 +115,32 @@ addElement(createElement('span', {
   innerText: 'ligand'
 }, { top: '60px', left: '32px' }))
 
+var cysteineCheckbox = createElement('input', {
+  type: 'checkbox',
+  checked: true,
+  onchange: function (e) {
+    stage.getRepresentationsByName('cysteine')
+      .setVisibility(e.target.checked)
+  }
+}, { top: '84px', left: '12px' })
+addElement(cysteineCheckbox)
+addElement(createElement('span', {
+  innerText: 'cysteine'
+}, { top: '84px', left: '32px' }))
+
+var cysteine_ajoeneCheckbox = createElement('input', {
+  type: 'checkbox',
+  checked: true,
+  onchange: function (e) {
+    stage.getRepresentationsByName('cysteine_ajoene')
+      .setVisibility(e.target.checked)
+  }
+}, { top: '108px', left: '12px' })
+addElement(cysteine_ajoeneCheckbox)
+addElement(createElement('span', {
+  innerText: 'cysteine_ajoene'
+}, { top: '108px', left: '32px' }))
+
 var waterIonCheckbox = createElement('input', {
   type: 'checkbox',
   checked: false,
@@ -107,11 +148,11 @@ var waterIonCheckbox = createElement('input', {
     stage.getRepresentationsByName('waterIon')
       .setVisibility(e.target.checked)
   }
-}, { top: '84px', left: '12px' })
+}, { top: '132px', left: '12px' })
 addElement(waterIonCheckbox)
 addElement(createElement('span', {
   innerText: 'water+ion'
-}, { top: '84px', left: '32px' }))
+}, { top: '132px', left: '32px' }))
 
 var centerButton = createElement('input', {
   type: 'button',
@@ -119,7 +160,8 @@ var centerButton = createElement('input', {
   onclick: function () {
     stage.autoView(1000)
   }
-}, { top: '108px', left: '12px' })
+}, { top: '156px', left: '12px' })
 addElement(centerButton)
 
-loadStructure('data://3SN6.cif')
+//loadStructure('data://3SN6.cif')
+loadStructure('rcsb://6QHD')
