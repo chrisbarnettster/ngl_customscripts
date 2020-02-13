@@ -52,22 +52,22 @@ function loadStructure (input) {
     o.addRepresentation('surface', {
       opacity: 0.3,
       side: 'front'
-    })
+    }) // Representation: A transparent surface over the whole structure
     o.addRepresentation(polymerSelect.value, {
       sele: 'polymer',
       name: 'polymer'
-    })
+    }) // Representation: all polymer type (this will be used to allow dynamics views later)
     o.addRepresentation('ball+stick', {
       name: 'ligand',
       visible: ligandCheckbox.checked,
       sele: 'not ( polymer or water or ion )'
-    })
+    }) // Representation: Not polymer water and ions - that is probably ligand - and view as ball and stick
     o.addRepresentation('spacefill', {
       name: 'cysteine',
       visible: cysteineCheckbox.checked,
       sele: 'CYS',
       scale: 0.50
-    })
+    }) // Representation: VDW surface for all Cysteine residues.
     o.addRepresentation('surface', {
       name: 'cysteine_ajoene',
       visible: cysteine_ajoeneCheckbox.checked,
@@ -76,7 +76,7 @@ function loadStructure (input) {
       colorScheme: "resname",
       background: true,
       contour: true
-    })
+    }) // Representation: Highlight special cysteines where ajoene may attach with a surface.
     o.addRepresentation('surface', {
       name: 'cysteine_static',
       visible: cysteine_staticCheckbox.checked,
@@ -85,16 +85,16 @@ function loadStructure (input) {
       colorScheme: "resname",
       background: true,
       contour: true
-    })
+    }) // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition
     o.addRepresentation('surface', {
       name: 'phosphorylation',
       visible: phosphorylationCheckbox.checked,
-      sele: '[705 727 714]', // Note 705 is phosphoryated in this PDB
+      sele: '[705 727 714]', // Note 705 is phosphorylated in this PDB
       scale: 0.50,
       colorScheme: "resname",
       background: true,
       contour: true
-    })
+    }) // Representation: Highlight where phosphorylation occurs with a surface.
     o.addRepresentation('surface', {
       name: 'TAD_region',
       visible: tadregionCheckbox.checked,
@@ -102,15 +102,16 @@ function loadStructure (input) {
       scale: 0.50,
       colorScheme: "resname",
       opacity: 0.8
-    })
+    }) // Representation: Highlight the transactivation domain (TAD).
     o.addRepresentation('spacefill', {
       name: 'waterIon',
       visible: waterIonCheckbox.checked,
       sele: 'water or ion',
       scale: 0.25
-    })
+    }) // Representation: VDW view of water and ions. Note the checked settings are updated later.
 
 
+    // Create an annotation highlighting the phosphorylated tyrosine 705
     var s = o.structure.getAtomProxy()
     var elm = document.createElement('div')
     elm.innerText = "PHOSPHORYLATED TYROSINE 705"
@@ -123,6 +124,7 @@ function loadStructure (input) {
   })
 }
 
+// Allow loading of other PDB. Probably remove this button as this is getting pretty hardcoded for the pdbid
 var loadStructureButton = createFileButton('load structure', {
   accept: '.pdb,.cif,.ent,.gz',
   onchange: function (e) {
@@ -133,6 +135,7 @@ var loadStructureButton = createFileButton('load structure', {
 }, { top: '12px', left: '12px' })
 addElement(loadStructureButton)
 
+// Dynamically change the representation for the polymer selection
 var polymerSelect = createSelect([
   [ 'cartoon', 'cartoon' ],
   [ 'spacefill', 'spacefill' ],
@@ -151,6 +154,7 @@ var polymerSelect = createSelect([
 }, { top: '36px', left: '12px' })
 addElement(polymerSelect)
 
+// A whole lot of check boxes for specific parts of the protein.
 var ligandCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
@@ -231,7 +235,8 @@ addElement(createElement('span', {
 
 var waterIonCheckbox = createElement('input', {
   type: 'checkbox',
-  checked: false,
+  checked: false, // do not show by default
+  title: 'Select all water and ions using "water or ion"',
   onchange: function (e) {
     stage.getRepresentationsByName('waterIon')
       .setVisibility(e.target.checked)
@@ -242,8 +247,10 @@ addElement(createElement('span', {
   innerText: 'water+ion'
 }, { top: '204px', left: '32px' }))
 
+// Centre the view
 var centerButton = createElement('input', {
   type: 'button',
+  title: 'Center the view',
   value: 'center',
   onclick: function () {
     stage.autoView(1000)
@@ -251,6 +258,7 @@ var centerButton = createElement('input', {
 }, { top: '230px', left: '12px' })
 addElement(centerButton)
 
+// button to open up the original PDB entry at the RCSB
 var PDBButton = createElement('input', {
   type: 'button',
   value: 'PDB',
