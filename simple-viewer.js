@@ -41,6 +41,11 @@ function loadStructure (input) {
   stage.removeAllComponents()
   return stage.loadFile(input).then(function (o) {
     o.autoView()
+
+    o.addRepresentation('surface', {
+      opacity: 0.3,
+      side: 'front'
+    })
     o.addRepresentation(polymerSelect.value, {
       sele: 'polymer',
       name: 'polymer'
@@ -77,7 +82,7 @@ function loadStructure (input) {
     o.addRepresentation('surface', {
       name: 'phosphorylation',
       visible: phosphorylationCheckbox.checked,
-      sele: '[705 727 714]',
+      sele: '[705 727 714]', // Note 705 is phosphoryated in this PDB
       scale: 0.50,
       colorScheme: "resname",
       background: true,
@@ -97,6 +102,17 @@ function loadStructure (input) {
       sele: 'water or ion',
       scale: 0.25
     })
+
+
+    var s = o.structure.getAtomProxy()
+    var elm = document.createElement('div')
+    elm.innerText = "PHOSPHORYLATED TYROSINE 705"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'skyblue'
+    elm.style.padding = '8px'
+    o.addAnnotation(s.positionToVector3(), elm)
+
+    o.autoView()
   })
 }
 
@@ -227,6 +243,15 @@ var centerButton = createElement('input', {
   }
 }, { top: '230px', left: '12px' })
 addElement(centerButton)
+
+var PDBButton = createElement('input', {
+  type: 'button',
+  value: 'PDB',
+  onclick: function () {
+    window.open('https://www.rcsb.org/structure/6QHD', '_blank');
+  }
+}, { top: '256px', left: '12px' })
+addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
 loadStructure('rcsb://6QHD')
