@@ -48,26 +48,54 @@ function loadStructure (input) {
   stage.removeAllComponents()
   return stage.loadFile(input).then(function (o) {
     o.autoView()
-
-    o.addRepresentation('surface', {
+    /*const m1 = new Map([
+      ["opacity",0.3]
+      ["side", 'front']
+    ]);*/
+    surfacedata = {
       opacity: 0.3,
       side: 'front'
-    }) // Representation: A transparent surface over the whole structure
+    }
+
+    o.addRepresentation('surface', surfacedata) // Representation: A transparent surface over the whole structure
     o.addRepresentation(polymerSelect.value, {
       sele: 'polymer',
       name: 'polymer'
     }) // Representation: all polymer type (this will be used to allow dynamics views later)
-    o.addRepresentation('ball+stick', {
+
+    let collection = [];
+    collection.push({
+      representation: 'ball+stick',
+      representationdetails:  {
       name: 'ligand',
+      //visible: eval(this.name+'Checkbox.checked'),
       visible: ligandCheckbox.checked,
       sele: 'not ( polymer or water or ion )'
-    }) // Representation: Not polymer water and ions - that is probably ligand - and view as ball and stick
-    o.addRepresentation('spacefill', {
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    });
+    //liganddata.visible = eval(liganddata.name.concat('Checkbox.checked');)
+    //console.log(liganddata)
+    //o.addRepresentation(liganddata.rep, liganddata.repdetails) // Representation: Not polymer water and ions - that is probably ligand - and view as ball and stick
+
+    collection.push({
+      representation: 'spacefill',
+      representationdetails:  {
       name: 'cysteine',
       visible: cysteineCheckbox.checked,
       sele: 'CYS',
       scale: 0.50
-    }) // Representation: VDW surface for all Cysteine residues.
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    });
+
+    //o.addRepresentation(cysteinedata.rep, cysteinedata.repdetails) // Representation: VDW surface for all Cysteine residues.
+
+    //let collection = [liganddata, cysteinedata]
+
+    collection.forEach((item) => o.addRepresentation(item.rep, item.repdetails))
     o.addRepresentation('surface', {
       name: 'cysteine_ajoene',
       visible: cysteine_ajoeneCheckbox.checked,
