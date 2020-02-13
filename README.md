@@ -20,3 +20,4 @@ http://nglviewer.org/ngl/ - go here and load the scripts
  - make a map for all the selections. Iterate.
  - make a way for the selections to become boxes in a sensible way and share data
  - include cox2
+ - include linkout for drugs ajoene, DP

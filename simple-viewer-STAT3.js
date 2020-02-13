@@ -158,6 +158,7 @@ addElement(polymerSelect)
 var ligandCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
+  title: 'Show ligand. sele: "not ( polymer or water or ion )"',
   onchange: function (e) {
     stage.getRepresentationsByName('ligand')
       .setVisibility(e.target.checked)
@@ -171,6 +172,7 @@ addElement(createElement('span', {
 var cysteineCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
+  title: 'Show cysteines. sele: "CYS"',
   onchange: function (e) {
     stage.getRepresentationsByName('cysteine')
       .setVisibility(e.target.checked)
@@ -184,6 +186,7 @@ addElement(createElement('span', {
 var cysteine_ajoeneCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
+  title: 'Show cysteines where ajoene attaches. sele: "[367 687 108]"',
   onchange: function (e) {
     stage.getRepresentationsByName('cysteine_ajoene')
       .setVisibility(e.target.checked)
@@ -197,6 +200,7 @@ addElement(createElement('span', {
 var cysteine_staticCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
+  title: 'Show static cysteines (whatever that means?!) residues. sele: "[251 259 367 426]"',
   onchange: function (e) {
     stage.getRepresentationsByName('cysteine_static')
       .setVisibility(e.target.checked)
@@ -210,6 +214,7 @@ addElement(createElement('span', {
 var phosphorylationCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
+  title: 'Show phosphorylated residues. sele: "[705 727 714]"',
   onchange: function (e) {
     stage.getRepresentationsByName('phosphorylation')
       .setVisibility(e.target.checked)
@@ -223,6 +228,7 @@ addElement(createElement('span', {
 var tadregionCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
+  title: 'Show the Trans Activation Domain (TAD) sele: "690-770"',
   onchange: function (e) {
     stage.getRepresentationsByName('TAD_region')
       .setVisibility(e.target.checked)
@@ -261,6 +267,7 @@ addElement(centerButton)
 // button to open up the original PDB entry at the RCSB
 var PDBButton = createElement('input', {
   type: 'button',
+  title: 'Go to the RCSB for this PDBID',
   value: 'PDB',
   onclick: function () {
     window.open(rcsb_http_link, '_blank');
