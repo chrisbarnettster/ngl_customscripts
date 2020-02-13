@@ -1,3 +1,10 @@
+// A simple viewer script for ngl. Hardcoded for STAT3
+
+// Inspired by examples provided in nglviewer.
+
+var pdbid = '6QHD'; // This is the PDBID for STAT3
+let rcsb_link = 'rcsb://' + pdbid;
+let rcsb_http_link = 'https://www.rcsb.org/structure/' + pdbid;
 
 function addElement (el) {
   Object.assign(el.style, {
@@ -248,10 +255,10 @@ var PDBButton = createElement('input', {
   type: 'button',
   value: 'PDB',
   onclick: function () {
-    window.open('https://www.rcsb.org/structure/6QHD', '_blank');
+    window.open(rcsb_http_link, '_blank');
   }
 }, { top: '256px', left: '12px' })
 addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
-loadStructure('rcsb://6QHD')
+loadStructure(rcsb_link)
