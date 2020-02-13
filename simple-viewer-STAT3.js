@@ -48,37 +48,37 @@ function loadStructure (input) {
   stage.removeAllComponents()
   return stage.loadFile(input).then(function (o) {
     o.autoView()
-    /*const m1 = new Map([
-      ["opacity",0.3]
-      ["side", 'front']
-    ]);*/
-    surfacedata = {
-      opacity: 0.3,
-      side: 'front'
-    }
-
-    o.addRepresentation('surface', surfacedata) // Representation: A transparent surface over the whole structure
-    o.addRepresentation(polymerSelect.value, {
-      sele: 'polymer',
-      name: 'polymer'
-    }) // Representation: all polymer type (this will be used to allow dynamics views later)
 
     let collection = [];
+
+    collection.push({
+      representation: polymerSelect.value,
+      representationdetails:  {
+      sele: 'polymer',
+      name: 'polymer'
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+     }); // Representation: all polymer type (this will be used to allow dynamics views later)
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
+      opacity: 0.3,
+      side: 'front'
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+     }); // Representation: A transparent surface over the whole structure
     collection.push({
       representation: 'ball+stick',
       representationdetails:  {
       name: 'ligand',
-      //visible: eval(this.name+'Checkbox.checked'),
       visible: ligandCheckbox.checked,
       sele: 'not ( polymer or water or ion )'
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    });
-    //liganddata.visible = eval(liganddata.name.concat('Checkbox.checked');)
-    //console.log(liganddata)
-    //o.addRepresentation(liganddata.rep, liganddata.repdetails) // Representation: Not polymer water and ions - that is probably ligand - and view as ball and stick
-
+    }); // Representation: Not polymer water and ions - that is probably ligand - and view as ball and stick
     collection.push({
       representation: 'spacefill',
       representationdetails:  {
@@ -89,14 +89,10 @@ function loadStructure (input) {
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    });
-
-    //o.addRepresentation(cysteinedata.rep, cysteinedata.repdetails) // Representation: VDW surface for all Cysteine residues.
-
-    //let collection = [liganddata, cysteinedata]
-
-    collection.forEach((item) => o.addRepresentation(item.rep, item.repdetails))
-    o.addRepresentation('surface', {
+    });  // Representation: VDW surface for all Cysteine residues.
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
       name: 'cysteine_ajoene',
       visible: cysteine_ajoeneCheckbox.checked,
       sele: '[367 687 108]',
@@ -104,8 +100,13 @@ function loadStructure (input) {
       colorScheme: "resname",
       background: true,
       contour: true
-    }) // Representation: Highlight special cysteines where ajoene may attach with a surface.
-    o.addRepresentation('surface', {
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight special cysteines where ajoene may attach with a surface.
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
       name: 'cysteine_static',
       visible: cysteine_staticCheckbox.checked,
       sele: '[251 259 367 426]',
@@ -113,8 +114,13 @@ function loadStructure (input) {
       colorScheme: "resname",
       background: true,
       contour: true
-    }) // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition
-    o.addRepresentation('surface', {
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
       name: 'phosphorylation',
       visible: phosphorylationCheckbox.checked,
       sele: '[705 727 714]', // Note 705 is phosphorylated in this PDB
@@ -122,21 +128,36 @@ function loadStructure (input) {
       colorScheme: "resname",
       background: true,
       contour: true
-    }) // Representation: Highlight where phosphorylation occurs with a surface.
-    o.addRepresentation('surface', {
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight where phosphorylation occurs with a surface.
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
       name: 'TAD_region',
       visible: tadregionCheckbox.checked,
       sele: '690-770',
       scale: 0.50,
       colorScheme: "resname",
       opacity: 0.8
-    }) // Representation: Highlight the transactivation domain (TAD).
-    o.addRepresentation('spacefill', {
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight the transactivation domain (TAD).
+    collection.push({
+      representation: 'spacefill',
+      representationdetails:  {
       name: 'waterIon',
       visible: waterIonCheckbox.checked,
       sele: 'water or ion',
       scale: 0.25
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
     }) // Representation: VDW view of water and ions. Note the checked settings are updated later.
+
+    collection.forEach((item) => o.addRepresentation(item.rep, item.repdetails))
 
 
     // Create an annotation highlighting the phosphorylated tyrosine 705
