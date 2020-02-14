@@ -6,7 +6,10 @@ scripts for sharing views, includes cox2 and stat3viewer
 http://nglviewer.org/ngl/api/
 
 # The web application
-http://nglviewer.org/ngl/ - go here and load the scripts
+ - http://nglviewer.org/ngl/ - go here and load the scripts, *BUT* if you're in deep dev then use CODEPEN
+ - CODEPEN - take the load off of NGLview server and test in codepen e.g. https://codepen.io/pen?&editable=true&editors=001
+ - Gallery of scripts and things - http://nglviewer.org/ngl/gallery/index.html
+
 
 ## notes - check OneNote for other notes
  - For your interactive structure - dont worry about putting the static modifications on.
