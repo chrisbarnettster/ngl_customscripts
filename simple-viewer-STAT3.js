@@ -63,8 +63,9 @@ function loadStructure (input) {
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      opacity: 0.3,
-      side: 'front'
+      opacity: 0.2,
+      side: 'front',
+      surfaceType: 'vws',
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
@@ -95,39 +96,40 @@ function loadStructure (input) {
       representationdetails:  {
       name: 'cysteine_ajoene',
       visible: cysteine_ajoeneCheckbox.checked,
-      sele: '[367 687 108]',
+      sele: '[367 367 687 108]',
       scale: 0.50,
-      colorScheme: "resname",
+      color: "yellow",
       background: true,
-      contour: true
+      contour: false
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
     }); // Representation: Highlight special cysteines where ajoene may attach with a surface.
-    collection.push({
+    /*collection.push({
       representation: 'surface',
       representationdetails:  {
       name: 'cysteine_static',
       visible: cysteine_staticCheckbox.checked,
-      sele: '[251 259 367 426]',
+      sele: '[251 251 259 367 426]',
       scale: 0.50,
       colorScheme: "resname",
       background: true,
-      contour: true
+      contour: false
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition
+    }); // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition. Probably meant not the ajeoene cysteines but removing for now
+    */
     collection.push({
       representation: 'surface',
       representationdetails:  {
       name: 'phosphorylation',
       visible: phosphorylationCheckbox.checked,
-      sele: '[705 727 714]', // Note 705 is phosphorylated in this PDB
+      sele: '[705 705 727 714]', // Note 705 is phosphorylated in this PDB
       scale: 0.50,
-      colorScheme: "resname",
-      background: true,
-      contour: true
+      color: "pink",
+      background: false,
+      contour: false
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
@@ -139,7 +141,8 @@ function loadStructure (input) {
       visible: tadregionCheckbox.checked,
       sele: '690-770',
       scale: 0.50,
-      colorScheme: "resname",
+      color: 'lightblue',
+      background: true,
       opacity: 0.8
       },
       get rep() { return this.representation; },
@@ -161,13 +164,231 @@ function loadStructure (input) {
 
 
     // Create an annotation highlighting the phosphorylated tyrosine 705
-    var s = o.structure.getAtomProxy()
+    var s = o.structure
+    //var pho = s.setSelection('4-50').atomCenter()
+    //var pho = new s.Selection('4-50') //.atomCenter()
+    // var pho = o.setSelection('1-90') // this filters by these atoms 
+    //var pho = new NGL.Selection('@50,51,64,65,111')
+    var pho = new NGL.Selection(':A and ( 705 )')
+    var selpho =  s.getAtomSetWithinSelection(pho) // new NGL.Selection(sele), 5)
+    console.log(JSON.stringify(pho))
+    console.log(JSON.stringify(pho.selection))
+    console.log(JSON.stringify(selpho))
+    //console.log(JSON.stringify(selpho.atomCenter()))
+    //console.log(JSON.stringify(pho.selection.atomCenter()))
+
+    //var ap = o.structure.getAtomProxy(index=101)
+    //var ap = o.structure.getAtomProxy(pho)
+    //var ap = o.structure.getAtomProxy()
+    var apv = s.atomCenter(pho)
+    //var apv = ap.positionToVector3()
+    //console.log(JSON.stringify(o.structure))
+    console.log(JSON.stringify(apv))
+
     var elm = document.createElement('div')
-    elm.innerText = "PHOSPHORYLATED TYROSINE 705"
+    elm.innerText = "Y705"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'pink'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the PHOS
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 714 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "T714"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'pink'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+    // Create an annotation highlighting the PHOS
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 727 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "S727"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'pink'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the PHOS
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 705 714 727 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "Phosphorylated Residues"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'pink'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 108
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 108 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C108"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'yellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 251
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 251 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C251"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 259
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 259 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C259"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 328
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 328 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C328"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 367
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 367 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C367"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'yellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 418
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 418 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C418"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 426
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 426 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C426"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 468
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 468 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C468"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 542
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 542 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C542"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 550
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 550 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C550"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 687
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 687 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C687"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'yellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 712
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 712 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C712"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 718
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 718 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C718"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+    // Create an annotation highlighting the CYS 765
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 765 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "C765"
+    elm.style.color = 'black'
+    elm.style.backgroundColor = 'lightyellow'
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
+
+
+    // Create an annotation highlighting the TAD region 690-770
+    var s = o.structure
+    var pho = new NGL.Selection(':A and ( 690-770 )')
+    var apv = s.atomCenter(pho)
+    var elm = document.createElement('div')
+    elm.innerText = "TAD region"
     elm.style.color = 'black'
     elm.style.backgroundColor = 'skyblue'
-    elm.style.padding = '8px'
-    o.addAnnotation(s.positionToVector3(), elm)
+    elm.style.padding = '2px'
+    o.addAnnotation(apv, elm)
 
     o.autoView()
   })
@@ -196,7 +417,8 @@ var polymerSelect = createSelect([
     stage.eachComponent(function (o) {
       o.addRepresentation(e.target.value, {
         sele: 'polymer',
-        name: 'polymer'
+        name: 'polymer',
+        quality: 'user',
       })
     })
   }
@@ -246,6 +468,7 @@ addElement(createElement('span', {
   innerText: 'cysteine_ajoene'
 }, { top: '108px', left: '32px' }))
 
+/*
 var cysteine_staticCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
@@ -259,6 +482,7 @@ addElement(cysteine_staticCheckbox)
 addElement(createElement('span', {
   innerText: 'cysteine_static'
 }, { top: '132px', left: '32px' }))
+*/
 
 var phosphorylationCheckbox = createElement('input', {
   type: 'checkbox',
@@ -325,4 +549,8 @@ var PDBButton = createElement('input', {
 addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
-loadStructure(rcsb_link)
+loadStructure('http://localhost:8000/STAT3CombinedCompleteHomology.pdb')
+
+
+// Get orientation [-127.08,-58.06,-89.91,0,-81.81,142.68,23.5,0,69,62.25,-137.72,0,0.41,-23.72,-29.5,1]
+// [-133.75,-59.66,-78.45,0,-82.78,139.78,34.83,0,53.49,67.12,-142.25,0,0.41,-23.72,-29.5,1]
