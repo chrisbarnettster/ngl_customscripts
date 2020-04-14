@@ -5,6 +5,8 @@
 var pdbid = '6QHD'; // This is the PDBID for STAT3
 let rcsb_link = 'rcsb://' + pdbid;
 let rcsb_http_link = 'https://www.rcsb.org/structure/' + pdbid;
+let git_http_link = 'https://raw.githubusercontent.com/chrisbarnettster/ngl_customscripts/master/data/STAT3CombinedCompleteHomology.pdb';
+let customview = [-133.75,-59.66,-78.45,0,-82.78,139.78,34.83,0,53.49,67.12,-142.25,0,0.41,-23.72,-29.5,1] 
 
 function addElement (el) {
   Object.assign(el.style, {
@@ -167,7 +169,7 @@ function loadStructure (input) {
     var s = o.structure
     //var pho = s.setSelection('4-50').atomCenter()
     //var pho = new s.Selection('4-50') //.atomCenter()
-    // var pho = o.setSelection('1-90') // this filters by these atoms 
+    // var pho = o.setSelection('1-90') // this filters by these atoms
     //var pho = new NGL.Selection('@50,51,64,65,111')
     var pho = new NGL.Selection(':A and ( 705 )')
     var selpho =  s.getAtomSetWithinSelection(pho) // new NGL.Selection(sele), 5)
@@ -391,6 +393,7 @@ function loadStructure (input) {
     o.addAnnotation(apv, elm)
 
     o.autoView()
+    o.stage.viewerControls.orient(customview)
   })
 }
 
@@ -549,7 +552,7 @@ var PDBButton = createElement('input', {
 addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
-loadStructure('http://localhost:8000/STAT3CombinedCompleteHomology.pdb')
+loadStructure(git_http_link)
 
 
 // Get orientation [-127.08,-58.06,-89.91,0,-81.81,142.68,23.5,0,69,62.25,-137.72,0,0.41,-23.72,-29.5,1]

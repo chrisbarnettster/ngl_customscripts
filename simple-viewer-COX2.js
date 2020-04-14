@@ -5,6 +5,8 @@
 var pdbid = '5F19'; // This is the PDBID for STAT3
 let rcsb_link = 'rcsb://' + pdbid;
 let rcsb_http_link = 'https://www.rcsb.org/structure/' + pdbid;
+let git_http_link = 'https://raw.githubusercontent.com/chrisbarnettster/ngl_customscripts/master/data/1v0x_prep.pdb';
+let customview = [-6.53,-106.23,-30.63,0,110.55,-6.42,-1.3,0,-0.52,-30.65,106.42,0,-25.99,-27.19,-13.77,1]
 
 function addElement (el) {
   Object.assign(el.style, {
@@ -96,7 +98,7 @@ function loadStructure (input) {
       representationdetails:  {
       name: 'cysteine_ajoene',
       visible: cysteine_ajoeneCheckbox.checked,
-      sele: '[9 9 299]', 
+      sele: '[9 9 299]',
       scale: 0.50,
       colorScheme: "resname",
       background: true,
@@ -404,6 +406,7 @@ function loadStructure (input) {
     elm.style.padding = '2px'
     o.addAnnotation(apv, elm)
     o.autoView()
+    o.stage.viewerControls.orient(customview) 
   })
 }
 
@@ -589,6 +592,6 @@ addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
 //loadStructure(rcsb_link)
-loadStructure('http://localhost:8000/1v0x_prep.pdb')
+loadStructure(git_http_link)
 
 //orientation [-6.53,-106.23,-30.63,0,110.55,-6.42,-1.3,0,-0.52,-30.65,106.42,0,-25.99,-27.19,-13.77,1]
