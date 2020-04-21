@@ -1,8 +1,8 @@
-// A simple viewer script for ngl. Hardcoded for STAT3
+// A simple viewer script for ngl. Hardcoded for COX2
 
 // Inspired by examples provided in nglviewer.
 
-var pdbid = '5F19'; // This is the PDBID for STAT3
+var pdbid = '5F19'; // This is the PDBID
 let rcsb_link = 'rcsb://' + pdbid;
 let rcsb_http_link = 'https://www.rcsb.org/structure/' + pdbid;
 let git_http_link = 'https://raw.githubusercontent.com/chrisbarnettster/ngl_customscripts/master/data/1v0x_prep.pdb';
@@ -437,7 +437,7 @@ var polymerSelect = createSelect([
       })
     })
   }
-}, { top: '36px', left: '12px' })
+}, { top: '40px', left: '12px' })
 addElement(polymerSelect)
 
 // A whole lot of check boxes for specific parts of the protein.
@@ -449,11 +449,11 @@ var ligandCheckbox = createElement('input', {
     stage.getRepresentationsByName('ligand')
       .setVisibility(e.target.checked)
   }
-}, { top: '60px', left: '12px' })
+}, { top: '75px', left: '12px' })
 addElement(ligandCheckbox)
 addElement(createElement('span', {
   innerText: 'ligand'
-}, { top: '60px', left: '32px' }))
+}, { top: '75px', left: '32px' }))
 
 var cysteineCheckbox = createElement('input', {
   type: 'checkbox',
@@ -463,11 +463,11 @@ var cysteineCheckbox = createElement('input', {
     stage.getRepresentationsByName('All cysteines')
       .setVisibility(e.target.checked)
   }
-}, { top: '84px', left: '12px' })
+}, { top: '95px', left: '12px' })
 addElement(cysteineCheckbox)
 addElement(createElement('span', {
   innerText: 'cysteine'
-}, { top: '84px', left: '32px' }))
+}, { top: '95px', left: '32px' }))
 
 var cysteine_ajoeneCheckbox = createElement('input', {
   type: 'checkbox',
@@ -477,11 +477,11 @@ var cysteine_ajoeneCheckbox = createElement('input', {
     stage.getRepresentationsByName('ZA modified cysteine(s)')
       .setVisibility(e.target.checked)
   }
-}, { top: '108px', left: '12px' })
+}, { top: '115px', left: '12px' })
 addElement(cysteine_ajoeneCheckbox)
 addElement(createElement('span', {
   innerText: 'cysteine_ajoene'
-}, { top: '108px', left: '32px' }))
+}, { top: '115px', left: '32px' }))
 
 var cysteine_DPCheckbox = createElement('input', {
   type: 'checkbox',
@@ -491,11 +491,11 @@ var cysteine_DPCheckbox = createElement('input', {
     stage.getRepresentationsByName('DP modified cysteine(s)')
       .setVisibility(e.target.checked)
   }
-}, { top: '132px', left: '12px' })
+}, { top: '135px', left: '12px' })
 addElement(cysteine_DPCheckbox)
 addElement(createElement('span', {
   innerText: 'cysteine_DP'
-}, { top: '132px', left: '32px' }))
+}, { top: '135px', left: '32px' }))
 
 var acetylatedCheckbox = createElement('input', {
   type: 'checkbox',
@@ -505,11 +505,11 @@ var acetylatedCheckbox = createElement('input', {
     stage.getRepresentationsByName('Aspirin acetylated serine')
       .setVisibility(e.target.checked)
   }
-}, { top: '156px', left: '12px' })
+}, { top: '155px', left: '12px' })
 addElement(acetylatedCheckbox)
 addElement(createElement('span', {
   innerText: 'acetylated'
-}, { top: '156px', left: '32px' }))
+}, { top: '155px', left: '32px' }))
 
 var activesiteCheckbox = createElement('input', {
   type: 'checkbox',
@@ -519,11 +519,11 @@ var activesiteCheckbox = createElement('input', {
     stage.getRepresentationsByName('activesite')
       .setVisibility(e.target.checked)
   }
-}, { top: '180px', left: '12px' })
+}, { top: '175px', left: '12px' })
 addElement(activesiteCheckbox)
 addElement(createElement('span', {
   innerText: 'active site'
-}, { top: '180px', left: '32px' }))
+}, { top: '175px', left: '32px' }))
 
 var ironbindingsiteCheckbox = createElement('input', {
   type: 'checkbox',
@@ -533,11 +533,11 @@ var ironbindingsiteCheckbox = createElement('input', {
     stage.getRepresentationsByName('iron binding site')
       .setVisibility(e.target.checked)
   }
-}, { top: '204px', left: '12px' })
+}, { top: '195px', left: '12px' })
 addElement(ironbindingsiteCheckbox)
 addElement(createElement('span', {
   innerText: 'ironbinding site'
-}, { top: '204px', left: '32px' }))
+}, { top: '195px', left: '32px' }))
 
 var substratebindingsiteCheckbox = createElement('input', {
   type: 'checkbox',
@@ -547,11 +547,11 @@ var substratebindingsiteCheckbox = createElement('input', {
     stage.getRepresentationsByName('substratebindingsite')
       .setVisibility(e.target.checked)
   }
-}, { top: '228px', left: '12px' })
+}, { top: '215px', left: '12px' })
 addElement(substratebindingsiteCheckbox)
 addElement(createElement('span', {
   innerText: 'substrate binding site'
-}, { top: '228px', left: '32px' }))
+}, { top: '215px', left: '32px' }))
 
 
 var waterIonCheckbox = createElement('input', {
@@ -562,11 +562,11 @@ var waterIonCheckbox = createElement('input', {
     stage.getRepresentationsByName('waterIon')
       .setVisibility(e.target.checked)
   }
-}, { top: '252px', left: '12px' })
+}, { top: '235px', left: '12px' })
 addElement(waterIonCheckbox)
 addElement(createElement('span', {
   innerText: 'water+ion'
-}, { top: '252px', left: '32px' }))
+}, { top: '235px', left: '32px' }))
 
 // Centre the view
 var centerButton = createElement('input', {
@@ -576,7 +576,7 @@ var centerButton = createElement('input', {
   onclick: function () {
     stage.autoView(1000)
   }
-}, { top: '276px', left: '12px' })
+}, { top: '260px', left: '12px' })
 addElement(centerButton)
 
 // button to open up the original PDB entry at the RCSB
@@ -587,7 +587,7 @@ var PDBButton = createElement('input', {
   onclick: function () {
     window.open(rcsb_http_link, '_blank');
   }
-}, { top: '300px', left: '12px' })
+}, { top: '288px', left: '12px' })
 addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
@@ -595,4 +595,3 @@ addElement(PDBButton)
 loadStructure(git_http_link)
 
 //orientation [-6.53,-106.23,-30.63,0,110.55,-6.42,-1.3,0,-0.52,-30.65,106.42,0,-25.99,-27.19,-13.77,1]
-
