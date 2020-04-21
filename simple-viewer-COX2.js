@@ -120,7 +120,7 @@ function loadStructure (input) {
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition
+    }); // Representation: Highlight DP modified cysteines
     collection.push({
       representation: 'surface',
       representationdetails:  {

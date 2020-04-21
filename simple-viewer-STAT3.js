@@ -85,7 +85,7 @@ function loadStructure (input) {
     collection.push({
       representation: 'spacefill',
       representationdetails:  {
-      name: 'cysteine',
+      name: 'All cysteines',
       visible: cysteineCheckbox.checked,
       sele: 'CYS',
       scale: 0.50
@@ -96,32 +96,31 @@ function loadStructure (input) {
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'cysteine_ajoene',
+      name: 'ZA modified cysteine(s)',
       visible: cysteine_ajoeneCheckbox.checked,
-      sele: '[367 367 687 108]',
+      sele: '[367 367 108]',
       scale: 0.50,
       color: "yellow",
-      background: true,
+      background: false,
       contour: false
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
     }); // Representation: Highlight special cysteines where ajoene may attach with a surface.
-    /*collection.push({
+    collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'cysteine_static',
-      visible: cysteine_staticCheckbox.checked,
-      sele: '[251 251 259 367 426]',
+      name: 'DP modified cysteine(s)',
+      visible: cysteine_DPCheckbox.checked,
+      sele: '[108 108 687]',
       scale: 0.50,
       colorScheme: "resname",
-      background: true,
+      background: false,
       contour: false
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight static cysteines with a surface. This added in commit 46d722430289ac2516094ac83775c7216f7f36fcr . Unsure what I meant, must find the definition. Probably meant not the ajeoene cysteines but removing for now
-    */
+    }); // Representation: Highlight DP modified cysteines
     collection.push({
       representation: 'surface',
       representationdetails:  {
@@ -167,25 +166,9 @@ function loadStructure (input) {
 
     // Create an annotation highlighting the phosphorylated tyrosine 705
     var s = o.structure
-    //var pho = s.setSelection('4-50').atomCenter()
-    //var pho = new s.Selection('4-50') //.atomCenter()
-    // var pho = o.setSelection('1-90') // this filters by these atoms
-    //var pho = new NGL.Selection('@50,51,64,65,111')
     var pho = new NGL.Selection(':A and ( 705 )')
     var selpho =  s.getAtomSetWithinSelection(pho) // new NGL.Selection(sele), 5)
-    console.log(JSON.stringify(pho))
-    console.log(JSON.stringify(pho.selection))
-    console.log(JSON.stringify(selpho))
-    //console.log(JSON.stringify(selpho.atomCenter()))
-    //console.log(JSON.stringify(pho.selection.atomCenter()))
-
-    //var ap = o.structure.getAtomProxy(index=101)
-    //var ap = o.structure.getAtomProxy(pho)
-    //var ap = o.structure.getAtomProxy()
     var apv = s.atomCenter(pho)
-    //var apv = ap.positionToVector3()
-    //console.log(JSON.stringify(o.structure))
-    console.log(JSON.stringify(apv))
 
     var elm = document.createElement('div')
     elm.innerText = "Y705"
@@ -425,67 +408,65 @@ var polymerSelect = createSelect([
       })
     })
   }
-}, { top: '36px', left: '12px' })
+}, { top: '40px', left: '12px' })
 addElement(polymerSelect)
 
 // A whole lot of check boxes for specific parts of the protein.
 var ligandCheckbox = createElement('input', {
   type: 'checkbox',
-  checked: true,
+  checked: false,
   title: 'Show ligand. sele: "not ( polymer or water or ion )"',
   onchange: function (e) {
     stage.getRepresentationsByName('ligand')
       .setVisibility(e.target.checked)
   }
-}, { top: '60px', left: '12px' })
+}, { top: '75px', left: '12px' })
 addElement(ligandCheckbox)
 addElement(createElement('span', {
   innerText: 'ligand'
-}, { top: '60px', left: '32px' }))
+}, { top: '75px', left: '32px' }))
 
 var cysteineCheckbox = createElement('input', {
   type: 'checkbox',
-  checked: true,
-  title: 'Show cysteines. sele: "CYS"',
+  checked: false,
+  title: 'Show all cysteines. sele: "CYS"',
   onchange: function (e) {
-    stage.getRepresentationsByName('cysteine')
+    stage.getRepresentationsByName('All cysteines')
       .setVisibility(e.target.checked)
   }
-}, { top: '84px', left: '12px' })
+}, { top: '95px', left: '12px' })
 addElement(cysteineCheckbox)
 addElement(createElement('span', {
   innerText: 'cysteine'
-}, { top: '84px', left: '32px' }))
+}, { top: '95px', left: '32px' }))
 
 var cysteine_ajoeneCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
-  title: 'Show cysteines where ajoene attaches. sele: "[367 687 108]"',
+  title: 'Show cysteines where ajoene attaches.',
   onchange: function (e) {
-    stage.getRepresentationsByName('cysteine_ajoene')
+    stage.getRepresentationsByName('ZA modified cysteine(s)')
       .setVisibility(e.target.checked)
   }
-}, { top: '108px', left: '12px' })
+}, { top: '115px', left: '12px' })
 addElement(cysteine_ajoeneCheckbox)
 addElement(createElement('span', {
   innerText: 'cysteine_ajoene'
-}, { top: '108px', left: '32px' }))
+}, { top: '115px', left: '32px' }))
 
-/*
-var cysteine_staticCheckbox = createElement('input', {
+var cysteine_DPCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
-  title: 'Show static cysteines (whatever that means?!) residues. sele: "[251 259 367 426]"',
+  title: 'Show cysteines where DP attaches',
   onchange: function (e) {
-    stage.getRepresentationsByName('cysteine_static')
+    stage.getRepresentationsByName('DP modified cysteine(s)')
       .setVisibility(e.target.checked)
   }
-}, { top: '132px', left: '12px' })
-addElement(cysteine_staticCheckbox)
+}, { top: '135px', left: '12px' })
+addElement(cysteine_DPCheckbox)
 addElement(createElement('span', {
-  innerText: 'cysteine_static'
-}, { top: '132px', left: '32px' }))
-*/
+  innerText: 'cysteine_DP'
+}, { top: '135px', left: '32px' }))
 
 var phosphorylationCheckbox = createElement('input', {
   type: 'checkbox',
@@ -495,11 +476,11 @@ var phosphorylationCheckbox = createElement('input', {
     stage.getRepresentationsByName('phosphorylation')
       .setVisibility(e.target.checked)
   }
-}, { top: '156px', left: '12px' })
+}, { top: '155px', left: '12px' })
 addElement(phosphorylationCheckbox)
 addElement(createElement('span', {
   innerText: 'phosphorylation'
-}, { top: '156px', left: '32px' }))
+}, { top: '155px', left: '32px' }))
 
 var tadregionCheckbox = createElement('input', {
   type: 'checkbox',
@@ -509,11 +490,11 @@ var tadregionCheckbox = createElement('input', {
     stage.getRepresentationsByName('TAD_region')
       .setVisibility(e.target.checked)
   }
-}, { top: '180px', left: '12px' })
+}, { top: '175px', left: '12px' })
 addElement(tadregionCheckbox)
 addElement(createElement('span', {
   innerText: 'TAD region'
-}, { top: '180px', left: '32px' }))
+}, { top: '175px', left: '32px' }))
 
 var waterIonCheckbox = createElement('input', {
   type: 'checkbox',
@@ -523,11 +504,11 @@ var waterIonCheckbox = createElement('input', {
     stage.getRepresentationsByName('waterIon')
       .setVisibility(e.target.checked)
   }
-}, { top: '204px', left: '12px' })
+}, { top: '195px', left: '12px' })
 addElement(waterIonCheckbox)
 addElement(createElement('span', {
   innerText: 'water+ion'
-}, { top: '204px', left: '32px' }))
+}, { top: '195px', left: '32px' }))
 
 // Centre the view
 var centerButton = createElement('input', {
@@ -537,7 +518,7 @@ var centerButton = createElement('input', {
   onclick: function () {
     stage.autoView(1000)
   }
-}, { top: '230px', left: '12px' })
+}, { top: '220px', left: '12px' })
 addElement(centerButton)
 
 // button to open up the original PDB entry at the RCSB
@@ -548,7 +529,7 @@ var PDBButton = createElement('input', {
   onclick: function () {
     window.open(rcsb_http_link, '_blank');
   }
-}, { top: '256px', left: '12px' })
+}, { top: '248px', left: '12px' })
 addElement(PDBButton)
 
 //loadStructure('data://3SN6.cif')
