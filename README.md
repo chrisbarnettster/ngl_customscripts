@@ -2,7 +2,11 @@
 Scripts for sharing views of COX2 and STAT3.
 
 # Viewing COX2 and STAT3 in your web browser
- - Go to the NGL Web Application -- http://nglviewer.org/ngl/ -- and load one of the simple-viewer\*.js scripts (you will have downloaded these from this repository)
+ - Go to the [NGL Web Application](http://nglviewer.org/ngl/). Click on the File menu and choose Open.
+ - Load one of the simple-viewer\*.js scripts (you will have downloaded these from [this repository](https://github.com/chrisbarnettster/ngl_customscripts)).
+ - Controls: Zoom with the middle mouse button. Rotate with left-click and drag. Translate with right-click and drag. Check the Help menu and choose overview for more details.  
+ - Select and deselect views using the left checkboxes.
+ - Make more complex changes using the right hand panel.
 
 # Development
 ## CodePen
