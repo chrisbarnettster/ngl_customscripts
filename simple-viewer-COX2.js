@@ -85,7 +85,7 @@ function loadStructure (input) {
     collection.push({
       representation: 'spacefill',
       representationdetails:  {
-      name: 'cysteine',
+      name: 'All cysteines',
       visible: cysteineCheckbox.checked,
       sele: 'CYS',
       scale: 0.50
@@ -96,12 +96,12 @@ function loadStructure (input) {
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'cysteine_ajoene',
+      name: 'ZA modified cysteine(s)',
       visible: cysteine_ajoeneCheckbox.checked,
       sele: '[9 9 299]',
       scale: 0.50,
       colorScheme: "resname",
-      background: true,
+      background: false,
       contour: false
       },
       get rep() { return this.representation; },
@@ -110,12 +110,12 @@ function loadStructure (input) {
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'cysteine_DP',
+      name: 'DP modified cysteine(s)',
       visible: cysteine_DPCheckbox.checked,
-      sele: '23', // this is actually 9 but +14 for alignment
+      sele: '[9 9 299]', // this is actually 9 but +14 for alignment
       scale: 0.50,
       colorScheme: "resname",
-      background: true,
+      background: false,
       contour: false
       },
       get rep() { return this.representation; },
@@ -124,7 +124,7 @@ function loadStructure (input) {
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'acetylated',
+      name: 'Aspirin acetylated serine',
       visible: acetylatedCheckbox.checked,
       sele: '516', // note this is 516 and 516 + 14 for alignment
       scale: 0.50,
@@ -155,7 +155,7 @@ function loadStructure (input) {
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'ironbindingsite',
+      name: 'iron binding site',
       visible: ironbindingsiteCheckbox.checked,
       sele: '374', // and + 14 for alignment
       scale: 0.50,
@@ -443,7 +443,7 @@ addElement(polymerSelect)
 // A whole lot of check boxes for specific parts of the protein.
 var ligandCheckbox = createElement('input', {
   type: 'checkbox',
-  checked: true,
+  checked: false,
   title: 'Show ligand. sele: "not ( polymer or water or ion )"',
   onchange: function (e) {
     stage.getRepresentationsByName('ligand')
@@ -457,10 +457,10 @@ addElement(createElement('span', {
 
 var cysteineCheckbox = createElement('input', {
   type: 'checkbox',
-  checked: true,
-  title: 'Show cysteines. sele: "CYS"',
+  checked: false,
+  title: 'Show all cysteines. sele: "CYS"',
   onchange: function (e) {
-    stage.getRepresentationsByName('cysteine')
+    stage.getRepresentationsByName('All cysteines')
       .setVisibility(e.target.checked)
   }
 }, { top: '84px', left: '12px' })
@@ -472,9 +472,9 @@ addElement(createElement('span', {
 var cysteine_ajoeneCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
-  title: 'Show cysteines where ajoene attaches. sele: "[367 687 108]"',
+  title: 'Show cysteines where ajoene attaches.',
   onchange: function (e) {
-    stage.getRepresentationsByName('cysteine_ajoene')
+    stage.getRepresentationsByName('ZA modified cysteine(s)')
       .setVisibility(e.target.checked)
   }
 }, { top: '108px', left: '12px' })
@@ -485,10 +485,10 @@ addElement(createElement('span', {
 
 var cysteine_DPCheckbox = createElement('input', {
   type: 'checkbox',
-  checked: false,
-  title: 'Show static cysteines (whatever that means?!) residues. sele: "[251 259 367 426]"',
+  checked: true,
+  title: 'Show cysteines where DP attaches',
   onchange: function (e) {
-    stage.getRepresentationsByName('cysteine_DP')
+    stage.getRepresentationsByName('DP modified cysteine(s)')
       .setVisibility(e.target.checked)
   }
 }, { top: '132px', left: '12px' })
@@ -500,9 +500,9 @@ addElement(createElement('span', {
 var acetylatedCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
-  title: 'Show phosphorylated residues. sele: "[705 727 714]"',
+  title: 'Aspirin acetylated serine',
   onchange: function (e) {
-    stage.getRepresentationsByName('acetylated')
+    stage.getRepresentationsByName('Aspirin acetylated serine')
       .setVisibility(e.target.checked)
   }
 }, { top: '156px', left: '12px' })
@@ -514,7 +514,7 @@ addElement(createElement('span', {
 var activesiteCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
-  title: 'Show the Active site"',
+  title: 'Show the Active site',
   onchange: function (e) {
     stage.getRepresentationsByName('activesite')
       .setVisibility(e.target.checked)
@@ -528,9 +528,9 @@ addElement(createElement('span', {
 var ironbindingsiteCheckbox = createElement('input', {
   type: 'checkbox',
   checked: true,
-  title: 'Show the iron binding site sele: "690-770"',
+  title: 'Show the iron binding site',
   onchange: function (e) {
-    stage.getRepresentationsByName('ironbindingsite')
+    stage.getRepresentationsByName('iron binding site')
       .setVisibility(e.target.checked)
   }
 }, { top: '204px', left: '12px' })
@@ -595,3 +595,4 @@ addElement(PDBButton)
 loadStructure(git_http_link)
 
 //orientation [-6.53,-106.23,-30.63,0,110.55,-6.42,-1.3,0,-0.52,-30.65,106.42,0,-25.99,-27.19,-13.77,1]
+
