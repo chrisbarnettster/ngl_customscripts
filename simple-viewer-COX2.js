@@ -196,6 +196,75 @@ function loadStructure (input) {
       get repdetails() { return this.representationdetails; },
     }) // Representation: VDW view of water and ions. Note the checked settings are updated later.
 
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
+      name: 'proximalbindingpocket',
+      visible: true,
+      sele: '[106 106 335 339 341 509 513]', // and + 14 for alignment for the 1V0X structure
+      scale: 0.50,
+      colorScheme: "resname",
+      background: false,
+      contour: false,
+      opacity: 1.0,
+      surfaceType: 'sas',
+      color: 'lightgreen'
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight the Proximal Binding pocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
+      name: 'centralbindingpocket',
+      visible: true,
+      sele: '[338 338 370 371 373 367 508 512 516]', // and + 14 for alignment for the 1V0X structure
+      scale: 0.50,
+      colorScheme: "resname",
+      background: false,
+      contour: false,
+      opacity: 1.0,
+      surfaceType: 'sas',
+      color: 'green'
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight the Central Binding pocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
+      name: 'cox2sidepocket',
+      visible: true,
+      sele: '[420 420 509 499]', // and + 14 for alignment for the 1V0X structure
+      scale: 0.50,
+      colorScheme: "resname",
+      background: false,
+      contour: false,
+      opacity: 1.0,
+      surfaceType: 'sas',
+      color: 'orange'
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight the Cox2 sidepocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+    collection.push({
+      representation: 'surface',
+      representationdetails:  {
+      name: 'oxicampocket',
+      visible: true,
+      sele: '[99 99 102 103 331 335 345 517 520 521]', // and + 14 for alignment for the 1V0X structure
+      scale: 0.50,
+      colorScheme: "resname",
+      background: false,
+      contour: false,
+      opacity: 1.0,
+      surfaceType: 'sas',
+      color: 'purple'
+      },
+      get rep() { return this.representation; },
+      get repdetails() { return this.representationdetails; },
+    }); // Representation: Highlight the Oxicam pocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+
     collection.forEach((item) => o.addRepresentation(item.rep, item.repdetails))
 
 
@@ -595,3 +664,4 @@ addElement(PDBButton)
 loadStructure(git_http_link)
 
 //orientation [-6.53,-106.23,-30.63,0,110.55,-6.42,-1.3,0,-0.52,-30.65,106.42,0,-25.99,-27.19,-13.77,1]
+//orientation used for view of pockets [63.22,28.54,80.6,0,22.76,-102.24,18.34,0,82.41,6.34,-66.89,0,-25.99,-27.19,-13.77,1]
