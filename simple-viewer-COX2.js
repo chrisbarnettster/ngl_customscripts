@@ -212,13 +212,13 @@ function loadStructure (input) {
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight the Proximal Binding pocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+    }); // Representation: Highlight the Proximal Binding pocket for fatty acids as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
     collection.push({
       representation: 'surface',
       representationdetails:  {
       name: 'centralbindingpocket',
       visible: true,
-      sele: '[338 338 370 371 373 367 508 512 516]', // and + 14 for alignment for the 1V0X structure
+      sele: '[334 334 338 371 373 512 516]', // and + 14 for alignment for the 1V0X structure
       scale: 0.50,
       colorScheme: "resname",
       background: false,
@@ -229,13 +229,13 @@ function loadStructure (input) {
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight the Central Binding pocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+    }); // Representation: Highlight the Central Binding pocket for fatty acids as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
     collection.push({
       representation: 'surface',
       representationdetails:  {
-      name: 'cox2sidepocket',
+      name: 'distalpocket',
       visible: true,
-      sele: '[420 420 509 499]', // and + 14 for alignment for the 1V0X structure
+      sele: '[191 191 195 214 330 363 367 519 520]', // and + 14 for alignment for the 1V0X structure
       scale: 0.50,
       colorScheme: "resname",
       background: false,
@@ -246,24 +246,7 @@ function loadStructure (input) {
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight the Cox2 sidepocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
-    collection.push({
-      representation: 'surface',
-      representationdetails:  {
-      name: 'oxicampocket',
-      visible: true,
-      sele: '[99 99 102 103 331 335 345 517 520 521]', // and + 14 for alignment for the 1V0X structure
-      scale: 0.50,
-      colorScheme: "resname",
-      background: false,
-      contour: false,
-      opacity: 1.0,
-      surfaceType: 'sas',
-      color: 'pink'
-      },
-      get rep() { return this.representation; },
-      get repdetails() { return this.representationdetails; },
-    }); // Representation: Highlight the Oxicam pocket as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
+    }); // Representation: Highlight the distal sidepocket for fatty acids as per https://pubs.acs.org/doi/pdf/10.1021/acs.chemrev.0c00215
 
     collection.forEach((item) => o.addRepresentation(item.rep, item.repdetails))
 
