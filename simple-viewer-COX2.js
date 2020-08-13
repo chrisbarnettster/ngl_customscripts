@@ -259,7 +259,7 @@ function loadStructure (input) {
       contour: false,
       opacity: 1.0,
       surfaceType: 'sas',
-      color: 'purple'
+      color: 'pink'
       },
       get rep() { return this.representation; },
       get repdetails() { return this.representationdetails; },
